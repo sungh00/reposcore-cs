@@ -1,2 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Cocona;
+
+CoconaApp.Run(([Argument] string[] repository, bool verbose) =>
+        {
+            Console.WriteLine($"Repository: {String.Join("\n ", repository)}");
+            if (verbose)
+            {
+                Console.WriteLine("Verbose mode is enabled.");
+            }
+        });
