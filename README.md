@@ -45,6 +45,8 @@ $S = 3P_{fb}^* + 2P_d^* + 1P_t^* + 2I_{fb}^* + 1I_d^*$
 dotnet run -- repo1 repo2
 dotnet run -- repo1 repo2 --verbose
 dotnet run -- --version
+dotnet run -- --help
+
 ```
  
 ## 실행 예시
