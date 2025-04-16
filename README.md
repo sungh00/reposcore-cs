@@ -39,7 +39,6 @@ $S = 3P_{fb}^* + 2P_d^* + 1P_t^* + 2I_{fb}^* + 1I_d^*$
 아래 명령어를 통해 CLI를 실행할 수 있습니다.
  
 ```bash
-dotnet run -- --version
 dotnet run -- repo1 repo2
 dotnet run -- repo1 repo2 --verbose
 dotnet run -- --version
