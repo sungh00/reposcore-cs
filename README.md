@@ -61,3 +61,7 @@ Repository: repo1
 repo2
 Verbose mode is enabled.
 ```
+
+## .NET 가이드
+
+👉 [.Net 가이드](docs/dotNet-guide.md) 문서를 참고 부탁드립니다.
