@@ -21,8 +21,10 @@ PR의 점수를 최대로 하기 위해 기능/버그 PR을 먼저 계산한 후
 ($P_{fb}$이 0일 경우에도 문서 PR과 오타 PR 합산으로 최대 3개까지 인정됩니다.)
 
 $P_{fb}^* = \min(P_{fb}, P_{\text{valid}}) \quad$ 기능/버그 PR 최대 포함  
-$P_d^* = \min(P_d, P_{\text{valid}} - P_{fb}^*) \quad$ 문서 PR 포함  
-$P_t^* = P_{\text{valid}} - P_{fb}^* - P_d^* \quad$ 남은 개수에서 오타 PR 포함
+
+$P_d^* = \min(P_d, P_{\text{valid}} - P_{fb}^*)$  문서 PR 포함
+
+$P_t^* = P_{\text{valid}} - P_{fb}^* - P_d^*$  남은 개수에서 오타 PR 포함
 
 이슈의 점수를 최대로 하기 위해 기능/버그 이슈를 먼저 계산한 후 문서 이슈를 계산합니다.
 
