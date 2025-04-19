@@ -15,57 +15,55 @@ public class GitHubAnalyzer
 
     public async Task Analyze(string owner, string repo)
     {
-        // Merged PR 수집
+        // 병합된 PR 수집
         var prs = await _client.PullRequest.GetAllForRepository(owner, repo, new PullRequestRequest
         {
             State = ItemStateFilter.Closed
         });
 
-        // Open + Closed 이슈 수집
+        // 전체 이슈 수집
         var issues = await _client.Issue.GetAllForRepository(owner, repo, new RepositoryIssueRequest
         {
             State = ItemStateFilter.All
         });
 
-        // 통계 초기화
-        int p_fb = 0, p_d = 0, p_t = 0;
-        int i_fb = 0, i_d = 0;
+        // 라벨 기준 통계 변수
+        int pr_bug = 0, pr_doc = 0, pr_feat = 0;
+        int issue_bug = 0, issue_doc = 0, issue_feat = 0;
 
+        // PR 분류 (병합된 것만)
         foreach (var pr in prs.Where(p => p.Merged == true))
         {
-            if (IsDoc(pr.Title) || IsDoc(pr.Body)) p_d++;
-            else if (IsTypo(pr.Title) || IsTypo(pr.Body)) p_t++;
-            else p_fb++;
+            var labels = pr.Labels.Select(l => l.Name.ToLower()).ToList();
+
+            if (labels.Contains("bug")) pr_bug++;
+            if (labels.Contains("documentation")) pr_doc++;
+            if (labels.Contains("enhancement")) pr_feat++;
         }
 
+        // 이슈 분류 (PR 제외)
         foreach (var issue in issues)
         {
             if (issue.PullRequest != null) continue;
 
-            if (IsDoc(issue.Title) || IsDoc(issue.Body)) i_d++;
-            else i_fb++;
+            var labels = issue.Labels.Select(l => l.Name.ToLower()).ToList();
+
+            if (labels.Contains("bug")) issue_bug++;
+            if (labels.Contains("documentation")) issue_doc++;
+            if (labels.Contains("enhancement")) issue_feat++;
         }
 
         // 결과 출력
-        Console.WriteLine("\n📊 통계 결과");
-        Console.WriteLine($"기능/버그 PR (P_fb): {p_fb}");
-        Console.WriteLine($"문서 PR (P_d): {p_d}");
-        Console.WriteLine($"오타 PR (P_t): {p_t}");
-        Console.WriteLine($"기능/버그 이슈 (I_fb): {i_fb}");
-        Console.WriteLine($"문서 이슈 (I_d): {i_d}");
-    }
+        Console.WriteLine("\n📊 GitHub Label 통계 결과");
 
-    private bool IsDoc(string? text)
-    {
-        if (string.IsNullOrEmpty(text)) return false;
-        var lower = text.ToLower();
-        return lower.Contains("docs") || lower.Contains("documentation") || lower.Contains("readme");
-    }
+        Console.WriteLine("\n✅ Pull Requests (Merged)");
+        Console.WriteLine($"- Bug PRs: {pr_bug}");
+        Console.WriteLine($"- Documentation PRs: {pr_doc}");
+        Console.WriteLine($"- Enhancement PRs: {pr_feat}");
 
-    private bool IsTypo(string? text)
-    {
-        if (string.IsNullOrEmpty(text)) return false;
-        var lower = text.ToLower();
-        return lower.Contains("typo") || lower.Contains("오타");
+        Console.WriteLine("\n✅ Issues");
+        Console.WriteLine($"- Bug Issues: {issue_bug}");
+        Console.WriteLine($"- Documentation Issues: {issue_doc}");
+        Console.WriteLine($"- Enhancement Issues: {issue_feat}");
     }
 }
