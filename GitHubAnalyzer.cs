@@ -15,23 +15,68 @@ public class GitHubAnalyzer
 
     public async Task Analyze(string owner, string repo)
     {
-        // 병합된 PR 수집
-        var prs = await _client.PullRequest.GetAllForRepository(owner, repo, new PullRequestRequest
-        {
-            State = ItemStateFilter.Closed
-        });
+        IReadOnlyList<PullRequest> prs;
+        IReadOnlyList<Issue> issues;
 
-        // 전체 이슈 수집
-        var issues = await _client.Issue.GetAllForRepository(owner, repo, new RepositoryIssueRequest
+        try
         {
-            State = ItemStateFilter.All
-        });
+            prs = await _client.PullRequest.GetAllForRepository(owner, repo, new PullRequestRequest
+            {
+                State = ItemStateFilter.Closed
+            });
+        }
+        catch (RateLimitExceededException)
+        {
+            Console.WriteLine("❗ GitHub API 요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요.");
+            return;
+        }
+        catch (AuthorizationException)
+        {
+            Console.WriteLine("❗ 인증 오류가 발생했습니다. Access Token 또는 권한을 확인해주세요.");
+            return;
+        }
+        catch (NotFoundException)
+        {
+            Console.WriteLine("❗ 요청한 저장소를 찾을 수 없습니다. 저장소 이름 또는 소유자를 확인하세요.");
+            return;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❗ PR 정보 불러오기 중 오류 발생: {ex.Message}");
+            return;
+        }
 
-        // 라벨 기준 통계 변수
+        try
+        {
+            issues = await _client.Issue.GetAllForRepository(owner, repo, new RepositoryIssueRequest
+            {
+                State = ItemStateFilter.All
+            });
+        }
+        catch (RateLimitExceededException)
+        {
+            Console.WriteLine("❗ GitHub API 요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요.");
+            return;
+        }
+        catch (AuthorizationException)
+        {
+            Console.WriteLine("❗ 인증 오류가 발생했습니다. Access Token 또는 권한을 확인해주세요.");
+            return;
+        }
+        catch (NotFoundException)
+        {
+            Console.WriteLine("❗ 요청한 저장소를 찾을 수 없습니다. 저장소 이름 또는 소유자를 확인하세요.");
+            return;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❗ 이슈 정보 불러오기 중 오류 발생: {ex.Message}");
+            return;
+        }
+
         int pr_bug = 0, pr_doc = 0, pr_feat = 0;
         int issue_bug = 0, issue_doc = 0, issue_feat = 0;
 
-        // PR 분류 (병합된 것만)
         foreach (var pr in prs.Where(p => p.Merged == true))
         {
             var labels = pr.Labels.Select(l => l.Name.ToLower()).ToList();
@@ -41,7 +86,6 @@ public class GitHubAnalyzer
             if (labels.Contains("enhancement")) pr_feat++;
         }
 
-        // 이슈 분류 (PR 제외)
         foreach (var issue in issues)
         {
             if (issue.PullRequest != null) continue;
@@ -53,7 +97,6 @@ public class GitHubAnalyzer
             if (labels.Contains("enhancement")) issue_feat++;
         }
 
-        // 결과 출력
         Console.WriteLine("\n📊 GitHub Label 통계 결과");
 
         Console.WriteLine("\n✅ Pull Requests (Merged)");
