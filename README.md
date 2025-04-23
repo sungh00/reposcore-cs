@@ -54,15 +54,8 @@ dotnet run -- --help
 * 옵션 등을 정리해 나가는 단계이므로 실행 예시는 계속해서 변경할 것이므로 일단 삭제하였음
 * 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
 
+## [.NET 가이드](docs/dotNet-guide.md)
 
-## .NET 가이드
+## [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md)
 
-👉 [.Net 가이드](docs/dotNet-guide.md) 문서를 참고 부탁드립니다.
-
-## 프로젝트 기여 및 작업 규칙
-
-👉 [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md) 문서를 참고 부탁드립니다.
-
-## GITHUB Token 생성 방법
-
-👉 [GITHUB Token 생성 방법](docs/github-token-guide.md) 문서를 참고 부탁드립니다.
+## [Github Token 생성 방법](docs/github-token-guide.md)
