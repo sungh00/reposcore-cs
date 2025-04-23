@@ -49,21 +49,11 @@ dotnet run -- owner repo
 dotnet run -- owner repo --verbose
 dotnet run -- --version
 dotnet run -- --help
+```
 
-```
- 
-## 실행 예시
- 
-```bash
-$ dotnet run -- repo1 repo2
-Repository: repo1
-repo2
- 
-$ dotnet run -- repo1 repo2 --verbose
-Repository: repo1
-repo2
-Verbose mode is enabled.
-```
+* 옵션 등을 정리해 나가는 단계이므로 실행 예시는 계속해서 변경할 것이므로 일단 삭제하였음
+* 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
+
 
 ## .NET 가이드
 
