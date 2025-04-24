@@ -1,11 +1,8 @@
 ﻿using Cocona;
 using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.Text.Json;
+using Octokit;
 
-CoconaApp.Run(async(
+CoconaApp.Run((
     [Argument] string[] repos,
     [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose
 ) =>
@@ -27,24 +24,23 @@ CoconaApp.Run(async(
     string owner = repos[0];
     string repo = repos[1];
 
-    string Url = "https://api.github.com/repos";
-    string apiUrl = $"{Url}/{owner}/{repo}";
-
-
     try
     {
-        using (HttpClient client = new HttpClient())
-        {
-            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("CoconaApp", "1.0"));
-            HttpResponseMessage response = await client.GetAsync(apiUrl);
-            string result = await response.Content.ReadAsStringAsync();
+        var client = new GitHubClient(new ProductHeaderValue("CoconaApp"));
 
-            //var jsonElement = JsonDocument.Parse(result).RootElement;
-            //var prettyJson = JsonSerializer.Serialize(jsonElement, new JsonSerializerOptions { WriteIndented = true });
+        // Octokit의 API는 기본적으로 async임, 동기적으로 사용하기 위해 GetAwaiter().GetResult() 사용
 
-            Console.WriteLine($"[INFO]API 응답 코드: {response.StatusCode}");
-            //Console.WriteLine($"[INFO]API 응답 내용:\n{prettyJson}");
-        }
+        var repository = client.Repository.Get(owner, repo).GetAwaiter().GetResult();
+        //테스트
+        //Console.WriteLine($"[INFO] Repository Name: {repository.Name}");
+        //Console.WriteLine($"[INFO] Full Name: {repository.FullName}");
+        //Console.WriteLine($"[INFO] Description: {repository.Description}");
+        //Console.WriteLine($"[INFO] Stars: {repository.StargazersCount}");
+        //Console.WriteLine($"[INFO] Forks: {repository.ForksCount}");
+        //Console.WriteLine($"[INFO] Open Issues: {repository.OpenIssuesCount}");
+        //Console.WriteLine($"[INFO] Language: {repository.Language}");
+        //Console.WriteLine($"[INFO] URL: {repository.HtmlUrl}");
+        
     }
     catch (Exception e)
     {
