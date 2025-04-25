@@ -55,27 +55,29 @@ dotnet run -- --help
 
 ## [Github Token 생성 방법](docs/github-token-guide.md)
 
-##  C# Dev Kit 설치 및 활용 안내 문서 추가
 
+##  C# Dev Kit 설치 및 활용 안내 문서 추가
 Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
 테스트 실행, 디버깅, IntelliSense 자동완성 기능을 지원합니다.
-I. 설치 방법
+이 확장은 .NET 기반 C# 콘솔 애플리케이션, Blazor, MAUI 등 다양한 .NET 프로젝트;
+xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫폼을 지원합니다.
+
+### 설치 방법
     1. Visual Studio Code 실행
     2. 좌측 사이드바에서 Extensions(확장 프로그램) 탭 클릭
     3. 검색창에 "C# Dev Kit" 입력
     4. 설치(Install) 버튼 클릭
 
-또는 CLI(명령어)로 설치할 수도 있습니다:
-bash code --install-extension ms-dotnettools.csdevkit
+또는 터미널에서 명령어로 설치할 수도 있습니다:
+`bash code --install-extension ms-dotnettools.csdevkit`
 
-II. 활용 방법
+참고로, 현재는 devcontainer 설정으로 새로 코드스페이스를 만들 때 자동으로 설치가 되도록 설정이 되어 있습니다.
+
+### 활용 방법
 명령 팔레트(Command Palette) (Ctrl+Shift+P)에서 다음 명령어 사용:
-C# Dev Kit: Run Test
-C# Dev Kit: Debug Test
-IntelliSense 자동완성 기능 활성화
+- C# Dev Kit: Run Test
+- C# Dev Kit: Debug Test
+- IntelliSense 자동완성 기능 활성화
 .csproj 파일 기반 프로젝트를 자동으로 인식 및 빌드
 
-III. 적용 대상
-.NET 기반 C# 콘솔 애플리케이션
-Blazor, MAUI 등 다양한 .NET 프로젝트 xUnit, NUnit, MSTest 등 테스트 프레임워크 지원 Windows, macOS, Linux 플랫폼
 
