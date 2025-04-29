@@ -46,18 +46,6 @@ foreach (var issue in issues)
 }
 ```
 
-## 새로운 이슈 생성
-
-```csharp
-var newIssue = new NewIssue("이슈 제목")
-{
-    Body = "이슈 내용 작성"
-};
-
-var issue = await client.Issue.Create("owner_name", "repository_name", newIssue);
-Console.WriteLine($"Created Issue #{issue.Number}");
-```
-
 # 참고 자료
 
 - [Octokit.NET GitHub Repository](https://github.com/octokit/octokit.net)
