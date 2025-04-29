@@ -1,4 +1,3 @@
-/*
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -70,12 +69,25 @@ public class GitHubAnalyzer
             Console.WriteLine($"- Documentation Issues: {issue_doc}");
             Console.WriteLine($"- Enhancement Issues: {issue_feat}");
         }
+        catch (RateLimitExceededException)
+        {
+            Console.WriteLine("❗ API 호출 한도(Rate Limit)를 초과했습니다. 잠시 후 다시 시도해주세요.");
+            Environment.Exit(1);
+        }
+        catch (AuthorizationException)
+        {
+            Console.WriteLine("❗ 인증 실패: 올바른 토큰을 사용했는지 확인하세요.");
+            Environment.Exit(1);
+        }
+        catch (NotFoundException)
+        {
+            Console.WriteLine("❗ 저장소를 찾을 수 없습니다. owner/repo 이름을 확인하세요.");
+            Environment.Exit(1);
+        }
         catch (Exception ex)
         {
-            Console.WriteLine($"❗ 오류 발생: {ex.Message}");
-            Environment.Exit(1);  // 예외 발생 시 exit code 1로 종료
+            Console.WriteLine($"❗ 알 수 없는 오류가 발생했습니다: {ex.Message}");
+            Environment.Exit(1);
         }
     }
 }
-
-*/
