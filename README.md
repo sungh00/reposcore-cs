@@ -4,7 +4,8 @@ A CLI for scoring student participation in an open-source class repo, implemente
 **주의**: 처음 만들 때 dotnet 7.0으로 환경을 설정했다 8.0으로 설정을 바꿨기 때문에 그 이전에 Codespace를 생성한 경우 코드스페이스 vscode 에디터에서 `Ctrl-Shift-P`를 누르고 rebuild로 검색해서 Codespace rebuild를 선택하면 8.0 환경으로 다시 가상머신이 만들어집니다. (단, 기존에 컨테이너 안에 있는 파일들은 깃헙에 push하지 않은 내용들 중에 필요한 게 있으면 혹시 모르니 백업해 놓아야 ...)
 
 ## 참여조건
-해당 repository는 프로젝트 참여 점수 10점 미만인 학생만 참여할 수 있습니다
+해당 repository는 프로젝트 참여 점수 16점 미만(즉, 15점 이하)인 학생만 참여할 수 있습니다
+
 ## Score Formula
 아래는 PR 개수와 이슈 개수의 비율에 따라 점수로 인정가능한 최대 개수를 구하고 각 배점에 따라 최종 점수를 산출하는 공식이다.
 
@@ -21,8 +22,10 @@ PR의 점수를 최대로 하기 위해 기능/버그 PR을 먼저 계산한 후
 ($P_{fb}$이 0일 경우에도 문서 PR과 오타 PR 합산으로 최대 3개까지 인정됩니다.)
 
 $P_{fb}^* = \min(P_{fb}, P_{\text{valid}}) \quad$ 기능/버그 PR 최대 포함  
-$P_d^* = \min(P_d, P_{\text{valid}} - P_{fb}^*) \quad$ 문서 PR 포함  
-$P_t^* = P_{\text{valid}} - P_{fb}^* - P_d^* \quad$ 남은 개수에서 오타 PR 포함
+
+$P_d^* = \min(P_d, P_{\text{valid}} - P_{fb}^*)$  문서 PR 포함
+
+$P_t^* = P_{\text{valid}} - P_{fb}^* - P_d^*$  남은 개수에서 오타 PR 포함
 
 이슈의 점수를 최대로 하기 위해 기능/버그 이슈를 먼저 계산한 후 문서 이슈를 계산합니다.
 
@@ -32,32 +35,51 @@ $I_d^* = I_{\text{valid}} - I_{fb}^* \quad$ 남은 개수에서 문서 이슈 �
 최종 점수 계산 공식:  
 $S = 3P_{fb}^* + 2P_d^* + 1P_t^* + 2I_{fb}^* + 1I_d^*$
 
-## CLI 구현 설명
+## CLI 유티릴티 실행 방법
 
-아래는 본 프로젝트에 사용된 Cocona 기반 CLI 코드입니다.  
-기본적인 명령행 인자 처리와 `--verbose` 옵션을 실험하는 용도로 작성되었습니다.
-
-## 사용 방법
- 
-아래 명령어를 통해 CLI를 실행할 수 있습니다.
+기본적인 명령행 인자 처리와 옵션을 다음과 같은 명령어로 시험삼아 실행해 볼 수 있습니다.
  
 ```bash
-dotnet run -- repo1 repo2
-dotnet run -- repo1 repo2 --verbose
+dotnet run -- owner repo
+dotnet run -- owner repo --verbose
 dotnet run -- --version
 dotnet run -- --help
+```
 
-```
- 
-## 실행 예시
- 
-```bash
-$ dotnet run -- repo1 repo2
-Repository: repo1
-repo2
- 
-$ dotnet run -- repo1 repo2 --verbose
-Repository: repo1
-repo2
-Verbose mode is enabled.
-```
+* 옵션 등을 정리해 나가는 단계이므로 실행 예시는 출력 결과가 계속해서 변경할 것이므로 일단 이전에 실행 예시 출력 결과들은 삭제하였음
+* 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
+
+## [.NET 가이드](docs/dotNet-guide.md)
+
+## [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md)
+
+## [Github Token 생성 방법](docs/github-token-guide.md)
+
+## [Octokit 가이드](docs/octokit_guide.md)
+
+
+##  C# Dev Kit 설치 및 활용 안내 문서 추가
+Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
+테스트 실행, 디버깅, IntelliSense 자동완성 기능을 지원합니다.
+이 확장은 .NET 기반 C# 콘솔 애플리케이션, Blazor, MAUI 등 다양한 .NET 프로젝트;
+xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫폼을 지원합니다.
+
+### 설치 방법
+    1. Visual Studio Code 실행
+    2. 좌측 사이드바에서 Extensions(확장 프로그램) 탭 클릭
+    3. 검색창에 "C# Dev Kit" 입력
+    4. 설치(Install) 버튼 클릭
+
+또는 터미널에서 명령어로 설치할 수도 있습니다:
+`bash code --install-extension ms-dotnettools.csdevkit`
+
+참고로, 현재는 devcontainer 설정으로 새로 코드스페이스를 만들 때 자동으로 설치가 되도록 설정이 되어 있습니다.
+
+### 활용 방법
+명령 팔레트(Command Palette) (Ctrl+Shift+P)에서 다음 명령어 사용:
+- C# Dev Kit: Run Test
+- C# Dev Kit: Debug Test
+- IntelliSense 자동완성 기능 활성화
+.csproj 파일 기반 프로젝트를 자동으로 인식 및 빌드
+
+
