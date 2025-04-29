@@ -55,6 +55,8 @@ dotnet run -- --help
 
 ## [Github Token 생성 방법](docs/github-token-guide.md)
 
+## [Octokit 가이드](docs/octokit_guide.md)
+
 
 ##  C# Dev Kit 설치 및 활용 안내 문서 추가
 Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
