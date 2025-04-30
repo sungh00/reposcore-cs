@@ -82,4 +82,6 @@ xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫
 - IntelliSense 자동완성 기능 활성화
 .csproj 파일 기반 프로젝트를 자동으로 인식 및 빌드
 
+## [포크 동기화 가이드](docs/fork_sync_guide.md)
+
 
