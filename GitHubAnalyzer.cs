@@ -64,19 +64,20 @@ public class GitHubAnalyzer
                 }
             }
 
-
             // 결과 출력
             Console.WriteLine("\n📊 GitHub Label 통계 결과");
 
             Console.WriteLine("\n✅ Pull Requests (Merged)");
-            Console.WriteLine($"- Bug PRs: {pr_bug}");
-            Console.WriteLine($"- Documentation PRs: {pr_doc}");
-            Console.WriteLine($"- Enhancement PRs: {pr_feat}");
+            foreach (var label in targetLabels)
+            {
+                Console.WriteLine($"- {char.ToUpper(label[0]) + label.Substring(1)} PRs: {labelCounts[label]}");
+            }
 
             Console.WriteLine("\n✅ Issues");
-            Console.WriteLine($"- Bug Issues: {issue_bug}");
-            Console.WriteLine($"- Documentation Issues: {issue_doc}");
-            Console.WriteLine($"- Enhancement Issues: {issue_feat}");
+            foreach (var label in targetLabels)
+            {
+                Console.WriteLine($"- {char.ToUpper(label[0]) + label.Substring(1)} Issues: {labelCounts[label]}");
+            }
         }
         catch (RateLimitExceededException)
         {
