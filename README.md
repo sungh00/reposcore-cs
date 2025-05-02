@@ -49,14 +49,7 @@ dotnet run -- --help
 * 옵션 등을 정리해 나가는 단계이므로 실행 예시는 출력 결과가 계속해서 변경할 것이므로 일단 이전에 실행 예시 출력 결과들은 삭제하였음
 * 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
 
-## [.NET 가이드](docs/dotNet-guide.md)
-
-## [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md)
-
-## [Github Token 생성 방법](docs/github-token-guide.md)
-
-## [Octokit 가이드](docs/octokit_guide.md)
-
+---
 
 ##  C# Dev Kit 설치 및 활용 안내 문서 추가
 Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
@@ -81,6 +74,16 @@ xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫
 - C# Dev Kit: Debug Test
 - IntelliSense 자동완성 기능 활성화
 .csproj 파일 기반 프로젝트를 자동으로 인식 및 빌드
+
+---
+
+## [.NET 가이드](docs/dotNet-guide.md)
+
+## [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md)
+
+## [Github Token 생성 방법](docs/github-token-guide.md)
+
+## [Octokit 가이드](docs/octokit_guide.md)
 
 ## [포크 동기화 가이드](docs/fork_sync_guide.md)
 
