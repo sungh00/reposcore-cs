@@ -35,7 +35,7 @@ $I_d^* = I_{\text{valid}} - I_{fb}^* \quad$ 남은 개수에서 문서 이슈 �
 최종 점수 계산 공식:  
 $S = 3P_{fb}^* + 2P_d^* + 1P_t^* + 2I_{fb}^* + 1I_d^*$
 
-## CLI 유티릴티 실행 방법
+## CLI 유틸리티 실행 방법
 
 기본적인 명령행 인자 처리와 옵션을 다음과 같은 명령어로 시험삼아 실행해 볼 수 있습니다.
  
@@ -49,14 +49,7 @@ dotnet run -- --help
 * 옵션 등을 정리해 나가는 단계이므로 실행 예시는 출력 결과가 계속해서 변경할 것이므로 일단 이전에 실행 예시 출력 결과들은 삭제하였음
 * 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
 
-## [.NET 가이드](docs/dotNet-guide.md)
-
-## [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md)
-
-## [Github Token 생성 방법](docs/github-token-guide.md)
-
-## [Octokit 가이드](docs/octokit_guide.md)
-
+---
 
 ##  C# Dev Kit 설치 및 활용 안내 문서 추가
 Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
@@ -81,5 +74,17 @@ xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫
 - C# Dev Kit: Debug Test
 - IntelliSense 자동완성 기능 활성화
 .csproj 파일 기반 프로젝트를 자동으로 인식 및 빌드
+
+---
+
+## [.NET 가이드](docs/dotNet-guide.md)
+
+## [프로젝트 기여 및 작업 규칙](docs/project_guidelines.md)
+
+## [Github Token 생성 방법](docs/github-token-guide.md)
+
+## [Octokit 가이드](docs/octokit_guide.md)
+
+## [포크 동기화 가이드](docs/fork_sync_guide.md)
 
 

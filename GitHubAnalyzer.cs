@@ -30,44 +30,54 @@ public class GitHubAnalyzer
                 State = ItemStateFilter.All
             }).Result;
 
-            // 라벨 기준 통계 변수
-            int pr_bug = 0, pr_doc = 0, pr_feat = 0;
-            int issue_bug = 0, issue_doc = 0, issue_feat = 0;
+            var targetLabels = new[] { "bug", "documentation", "enhancement" };
+
+            var labelCounts = targetLabels.ToDictionary(label => label, label => 0);
 
             // PR 분류 (병합된 것만)
             foreach (var pr in prs.Where(p => p.Merged == true))
             {
                 var labels = pr.Labels.Select(l => l.Name.ToLower()).ToList();
 
-                if (labels.Contains("bug")) pr_bug++;
-                if (labels.Contains("documentation")) pr_doc++;
-                if (labels.Contains("enhancement")) pr_feat++;
+                foreach (var label in targetLabels)
+                {
+                    if (labels.Contains(label))
+                    {
+                        labelCounts[label]++;
+                    }
+                }
             }
 
             // 이슈 분류 (PR 제외)
             foreach (var issue in issues)
             {
-                if (issue.PullRequest != null) continue;
+                if (issue.PullRequest != null) continue; // PR 제외
 
                 var labels = issue.Labels.Select(l => l.Name.ToLower()).ToList();
 
-                if (labels.Contains("bug")) issue_bug++;
-                if (labels.Contains("documentation")) issue_doc++;
-                if (labels.Contains("enhancement")) issue_feat++;
+                foreach (var label in targetLabels)
+                {
+                    if (labels.Contains(label))
+                    {
+                        labelCounts[label]++;
+                    }
+                }
             }
 
             // 결과 출력
             Console.WriteLine("\n📊 GitHub Label 통계 결과");
 
             Console.WriteLine("\n✅ Pull Requests (Merged)");
-            Console.WriteLine($"- Bug PRs: {pr_bug}");
-            Console.WriteLine($"- Documentation PRs: {pr_doc}");
-            Console.WriteLine($"- Enhancement PRs: {pr_feat}");
+            foreach (var label in targetLabels)
+            {
+                Console.WriteLine($"- {char.ToUpper(label[0]) + label.Substring(1)} PRs: {labelCounts[label]}");
+            }
 
             Console.WriteLine("\n✅ Issues");
-            Console.WriteLine($"- Bug Issues: {issue_bug}");
-            Console.WriteLine($"- Documentation Issues: {issue_doc}");
-            Console.WriteLine($"- Enhancement Issues: {issue_feat}");
+            foreach (var label in targetLabels)
+            {
+                Console.WriteLine($"- {char.ToUpper(label[0]) + label.Substring(1)} Issues: {labelCounts[label]}");
+            }
         }
         catch (RateLimitExceededException)
         {
