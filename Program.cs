@@ -9,13 +9,6 @@ CoconaApp.Run((
     [Option("f|format", Description = "출력 형식을 지정합니다.")] string? format  // --format 옵션
 ) =>
 {
-    Console.WriteLine($"Repository: {String.Join("\n ", repos)}");
-
-    if (verbose)
-    {
-        Console.WriteLine("Verbose mode is enabled.");
-    }
-
     if (repos.Length != 2)
     {
         Console.WriteLine("❗ repository 인자는 'owner repo' 순서로 2개가 필요합니다.");
@@ -25,6 +18,13 @@ CoconaApp.Run((
 
     string owner = repos[0];
     string repo = repos[1];
+    
+    Console.WriteLine($"Repository: {String.Join("\n ", repos)}");
+
+    if (verbose)
+    {
+        Console.WriteLine("Verbose mode is enabled.");
+    }
 
     try
     {
