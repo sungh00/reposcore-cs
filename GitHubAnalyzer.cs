@@ -2,8 +2,6 @@ using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Cocona;
 
 public class GitHubAnalyzer
 {
@@ -11,7 +9,18 @@ public class GitHubAnalyzer
 
     public GitHubAnalyzer()
     {
-        _client = new GitHubClient(new ProductHeaderValue("reposcore-cs"));
+        _client = CreateClient("reposcore-cs");
+    }
+
+    private GitHubClient CreateClient(string productName)
+    {
+        return new GitHubClient(new ProductHeaderValue(productName));
+    }
+
+    private void HandleError(Exception ex)
+    {
+        Console.WriteLine($"❗ 알 수 없는 오류가 발생했습니다: {ex.Message}");
+        Environment.Exit(1);
     }
 
     public void Analyze(string owner, string repo)
@@ -31,36 +40,28 @@ public class GitHubAnalyzer
             }).Result;
 
             var targetLabels = new[] { "bug", "documentation", "enhancement" };
-
-            var labelCounts = targetLabels.ToDictionary(label => label, label => 0);
+            var labelCounts = targetLabels.ToDictionary(label => label, _ => 0);
 
             // PR 분류 (병합된 것만)
             foreach (var pr in prs.Where(p => p.Merged == true))
             {
                 var labels = pr.Labels.Select(l => l.Name.ToLower()).ToList();
-
                 foreach (var label in targetLabels)
                 {
                     if (labels.Contains(label))
-                    {
                         labelCounts[label]++;
-                    }
                 }
             }
 
             // 이슈 분류 (PR 제외)
             foreach (var issue in issues)
             {
-                if (issue.PullRequest != null) continue; // PR 제외
-
+                if (issue.PullRequest != null) continue;
                 var labels = issue.Labels.Select(l => l.Name.ToLower()).ToList();
-
                 foreach (var label in targetLabels)
                 {
                     if (labels.Contains(label))
-                    {
                         labelCounts[label]++;
-                    }
                 }
             }
 
@@ -96,8 +97,7 @@ public class GitHubAnalyzer
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❗ 알 수 없는 오류가 발생했습니다: {ex.Message}");
-            Environment.Exit(1);
+            HandleError(ex);
         }
     }
 }
