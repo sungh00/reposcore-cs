@@ -1,47 +1,38 @@
-## Program.cs guide
 
-안내하고 있는 방법과 같은 방법으로 다른 .cs 파일도 적용할 수 있습니다.
+## Program.cs Guide
+
+안내하고 있는 방법과 같은 방식으로 다른 `.cs` 파일에도 동일하게 적용할 수 있습니다.
+
 
 ## 현재 만든 코드의 기능
 
-`Test.cs는 SayHello(string name)을 통해 인삿말을 출력하는 간단한 코드입니다.`
+`Test.cs`는 `SayHello(string name)` 메서드를 통해 **인삿말을 출력하는 간단한 코드**입니다.
+
 
 ## 사용 방법
 
-Program.cs에서 사용할려면 CoconaApp.Run 내부의 실행 로직 안에 작성해야 합니다.
+`Program.cs`에서 사용하려면 `CoconaApp.Run` 내부의 실행 로직 안에 작성해야 합니다.
 
-따라서
-
+```csharp
 using Cocona;
-
 using System;
-
 using Octokit;
 
 CoconaApp.Run((
-    
-  [Argument] string[] repos,
-    
-  [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose,
-    
-  [Option("o|output", Description = "출력 디렉토리 경로를 지정합니다.")] string? output,
-    
-   [Option("f|format", Description = "출력 형식을 지정합니다.")] string? format
-    
+    [Argument] string[] repos,
+    [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose,
+    [Option("o|output", Description = "출력 디렉토리 경로를 지정합니다.")] string? output,
+    [Option("f|format", Description = "출력 형식을 지정합니다.")] string? format
 ) =>
 
 {
+    // 여기서 Greeter 인스턴스를 사용(SayHello("GitHub User");을 출력해줌)
+    var greeter = new Greeter();
+    greeter.SayHello("GitHub User");
 
-   `여기서 Greeter 인스턴스를 사용`
-   
-   var greeter = new Greeter();
-  
-   greeter.SayHello("GitHub User");
-    
-  ...(아래 코드 동일하게)
-
-  }
-
+     // ...(아래 코드 동일하게)
+});
+```
 
 이와 같은 형식으로 작성해주시면 됩니다.
 
