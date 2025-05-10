@@ -3,10 +3,27 @@
 
 안내하고 있는 방법과 같은 방식으로 다른 `.cs` 파일에도 동일하게 적용할 수 있습니다.
 
+## Greeter.cs(예시 코드)
+```csharp
 
-## 현재 만든 코드의 기능
+public class Greeter
 
-`Test.cs`는 `SayHello(string name)` 메서드를 통해 **인삿말을 출력하는 간단한 코드**입니다.
+{
+
+    public void SayHello(string name)
+
+    {
+
+        Console.WriteLine($"Hello, {name}!");
+
+    }
+
+}
+```
+
+## Greeter.cs의 기능
+
+`Greeter.cs`는 `SayHello(string name)` 메서드를 통해 **인삿말을 출력하는 간단한 코드**입니다.
 
 
 ## 사용 방법
