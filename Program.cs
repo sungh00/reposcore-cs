@@ -1,26 +1,27 @@
 ﻿using Cocona;
 using System;
+using System.Collections.Generic;
 using Octokit;
 
 CoconaApp.Run((
     [Argument] string[] repos,
     [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose,
-    [Option("o|output", Description = "출력 디렉토리 경로를 지정합니다.")] string? output,
-    [Option("f|format", Description = "출력 형식을 지정합니다.")] string? format,
-    [Option('t', Description = "GitHub Personal Access Token 입력")] string? token // 토큰 입력 옵션 추가
+    [Option('o', Description = "출력 디렉토리 경로를 지정합니다.")] string? output,
+    [Option('f', Description = "출력 형식을 지정합니다. (예: json,csv)")] string? format,
+    [Option('t', Description = "GitHub Personal Access Token 입력")] string? token
 ) =>
 {
     if (repos.Length != 2)
     {
         Console.WriteLine("! repository 인자는 'owner repo' 순서로 2개가 필요합니다.");
-        Environment.Exit(1);  // 오류 발생 시 exit code 1로 종료
+        Environment.Exit(1);
         return;
     }
 
     string owner = repos[0];
     string repo = repos[1];
     
-    Console.WriteLine($"Repository: {String.Join("\n ", repos)}");
+    Console.WriteLine($"Repository: {string.Join("\n ", repos)}");
 
     if (verbose)
     {
@@ -31,16 +32,13 @@ CoconaApp.Run((
     {
         var client = new GitHubClient(new ProductHeaderValue("CoconaApp"));
 
-        // GitHub Personal Access Token이 입력되었으면 인증 설정
         if (!string.IsNullOrEmpty(token))
         {
             client.Credentials = new Credentials(token);
         }
 
-        // Repository 정보 가져오기
         var repository = client.Repository.Get(owner, repo).GetAwaiter().GetResult();
 
-        // Repository에 대한 기본 정보 출력
         Console.WriteLine($"[INFO] Repository Name: {repository.Name}");
         Console.WriteLine($"[INFO] Full Name: {repository.FullName}");
         Console.WriteLine($"[INFO] Description: {repository.Description}");
@@ -49,7 +47,6 @@ CoconaApp.Run((
         Console.WriteLine($"[INFO] Open Issues: {repository.OpenIssuesCount}");
         Console.WriteLine($"[INFO] Language: {repository.Language}");
         Console.WriteLine($"[INFO] URL: {repository.HtmlUrl}");
-
     }
     catch (Exception e)
     {
@@ -59,15 +56,22 @@ CoconaApp.Run((
 
     try
     {
-        // GitHubAnalyzer 사용 (주석 해제)
-        var analyzer = new GitHubAnalyzer(token); // 토큰을 전달
-        analyzer.Analyze(repos[0], repos[1]);   // PR과 이슈 분석을 실행
+        // format 옵션을 쉼표로 분리하여 리스트로 변환
+        var formats = string.IsNullOrWhiteSpace(format)
+            ? new List<string> { "json" }
+            : new List<string>(format.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+        // 출력 디렉토리 기본값 처리
+        var outputDir = string.IsNullOrWhiteSpace(output) ? "output" : output;
+
+        var analyzer = new GitHubAnalyzer(token);
+        analyzer.Analyze(owner, repo, outputDir, formats); // 변경된 Analyze 호출
     }
     catch (Exception ex)
     {
         Console.WriteLine($"! 오류 발생: {ex.Message}");
-        Environment.Exit(1);  // 예외 발생 시 exit code 1로 종료
+        Environment.Exit(1);
     }
 
-    Environment.Exit(0);  // 정상 종료 시 exit code 0으로 종료
+    Environment.Exit(0);
 });
