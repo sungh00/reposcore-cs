@@ -1,5 +1,5 @@
 
-## Program.cs Guide
+## add_cs_files_guide
 
 안내하고 있는 방법과 같은 방식으로 다른 `.cs` 파일에도 동일하게 적용할 수 있습니다.
 

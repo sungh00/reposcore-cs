@@ -88,4 +88,5 @@ xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫
 
 ## [포크 동기화 가이드](docs/fork_sync_guide.md)
 
+## [소스 파일 추가 가이드](docs/add_cs_files_guide.md)
 
