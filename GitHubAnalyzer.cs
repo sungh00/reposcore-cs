@@ -35,16 +35,19 @@ public class GitHubAnalyzer
     {
         try
         {
+            Console.WriteLine("📥 Pull Requests 로딩 중...");
             var prs = _client.PullRequest.GetAllForRepository(owner, repo, new PullRequestRequest
             {
                 State = ItemStateFilter.Closed
             }).Result;
 
+            Console.WriteLine("📥 Issues 로딩 중...");
             var issues = _client.Issue.GetAllForRepository(owner, repo, new RepositoryIssueRequest
             {
                 State = ItemStateFilter.All
             }).Result;
 
+            Console.WriteLine("🔍 라벨 통계 분석 중...");
             var targetLabels = new[] { "bug", "documentation", "enhancement" };
             var labelCounts = targetLabels.ToDictionary(label => label, _ => 0);
 
@@ -83,7 +86,6 @@ public class GitHubAnalyzer
                 Console.WriteLine($"- {char.ToUpper(label[0]) + label.Substring(1)} Issues: {labelCounts[label]}");
             }
 
-            // 출력 디렉토리에 포맷별 빈 파일 생성
             GenerateOutputFiles(outputDir, formats);
         }
         catch (RateLimitExceededException)
@@ -107,19 +109,18 @@ public class GitHubAnalyzer
         }
     }
 
-    // format 옵션에 따라 빈 파일을 생성하는 메서드
     private void GenerateOutputFiles(string outputDir, List<string> formats)
     {
         try
         {
-            Directory.CreateDirectory(outputDir); // 디렉토리 생성
+            Directory.CreateDirectory(outputDir);
 
             foreach (var format in formats)
             {
                 string fileName = $"result.{format.ToLower()}";
                 string filePath = Path.Combine(outputDir, fileName);
 
-                File.WriteAllText(filePath, string.Empty); // 빈 파일 생성
+                File.WriteAllText(filePath, string.Empty);
                 Console.WriteLine($"📁 생성된 파일: {filePath}");
             }
         }
