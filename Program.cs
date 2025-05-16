@@ -20,7 +20,7 @@ CoconaApp.Run((
 
     string owner = repos[0];
     string repo = repos[1];
-    
+
     Console.WriteLine($"Repository: {string.Join("\n ", repos)}");
 
     if (verbose)
@@ -56,16 +56,14 @@ CoconaApp.Run((
 
     try
     {
-        // format 옵션을 쉼표로 분리하여 리스트로 변환
         var formats = string.IsNullOrWhiteSpace(format)
             ? new List<string> { "json" }
             : new List<string>(format.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
-        // 출력 디렉토리 기본값 처리
         var outputDir = string.IsNullOrWhiteSpace(output) ? "output" : output;
 
-        var analyzer = new GitHubAnalyzer(token);
-        analyzer.Analyze(owner, repo, outputDir, formats); // 변경된 Analyze 호출
+        var analyzer = new GitHubAnalyzer(token!); // ✅ null-forgiving 연산자 적용
+        analyzer.Analyze(owner, repo, outputDir, formats);
     }
     catch (Exception ex)
     {
