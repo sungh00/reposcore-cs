@@ -3,9 +3,6 @@ A CLI for scoring student participation in an open-source class repo, implemente
 
 **주의**: 처음 만들 때 dotnet 7.0으로 환경을 설정했다 8.0으로 설정을 바꿨기 때문에 그 이전에 Codespace를 생성한 경우 코드스페이스 vscode 에디터에서 `Ctrl-Shift-P`를 누르고 rebuild로 검색해서 Codespace rebuild를 선택하면 8.0 환경으로 다시 가상머신이 만들어집니다. (단, 기존에 컨테이너 안에 있는 파일들은 깃헙에 push하지 않은 내용들 중에 필요한 게 있으면 혹시 모르니 백업해 놓아야 ...)
 
-## 참여조건
-해당 repository는 프로젝트 참여 점수 25점 이하인 학생만 참여할 수 있습니다. (25점이 넘어가는 순간 다른 저장소에 참여해야 합니다.)
-
 ## Score Formula
 아래는 PR 개수와 이슈 개수의 비율에 따라 점수로 인정가능한 최대 개수를 구하고 각 배점에 따라 최종 점수를 산출하는 공식이다.
 
