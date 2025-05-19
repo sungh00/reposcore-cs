@@ -49,7 +49,7 @@ dotnet run -- --help
 
 ---
 
-##  C# Dev Kit 설치 및 활용 안내 문서 추가
+##  C# Dev Kit 설치 및 활용
 Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
 테스트 실행, 디버깅, IntelliSense 자동완성 기능을 지원합니다.
 이 확장은 .NET 기반 C# 콘솔 애플리케이션, Blazor, MAUI 등 다양한 .NET 프로젝트;
