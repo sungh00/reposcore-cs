@@ -8,6 +8,7 @@ public record UserActivity( // 나중에 적당한 다른 곳으로 옮겨야 �
     int IS_fb,
     int IS_doc
 );
+
 public static class DummyData {
     public static Dictionary<string, UserActivity> repo1Activities = new() {
         { "user00", new UserActivity(1, 0, 0, 0, 0) },
