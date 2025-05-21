@@ -11,6 +11,23 @@ CoconaApp.Run((
     [Option('t', Description = "GitHub Personal Access Token 입력")] string? token
 ) =>
 {
+    if (repos.Length == 1 && repos[0] == "generate-readme")
+    {
+        const string templatePath = "README_Template.md";
+        const string outputPath = "README.md";
+
+        if (!File.Exists(templatePath))
+        {
+            Console.WriteLine($"❌ {templatePath} 파일이 존재하지 않습니다.");
+            Environment.Exit(1);
+        }
+
+        var template = File.ReadAllText(templatePath);
+        File.WriteAllText(outputPath, template);
+        Console.WriteLine("✅ README.md가 템플릿으로부터 생성되었습니다.");
+        Environment.Exit(0);
+    }
+    
     // 더미 데이타가 실제로 불러와 지는지 기본적으로 확인하기 위한 코드
     var repo1Activities = DummyData.repo1Activities;
     Console.WriteLine("repo1Activities:"+repo1Activities.Count);
