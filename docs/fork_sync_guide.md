@@ -51,6 +51,10 @@ git fetch upstream
 
 ## 병합 또는 리베이스 방식으로 동기화
 
+기존에는 git checkout 명령어를 사용했지만, Git 2.23 버전부터는 git switch 사용이 권장됨
+
+(본인이 사용하고 싶은 방법을 사용해서 하면 됨)
+
 ### 방법 1: 병합 (Merge)
 
 ```bash
@@ -58,10 +62,20 @@ git checkout main
 git merge upstream/main
 ```
 
+```bash
+git switch main
+git merge upstream/main
+```
+
 ### 방법 2: 리베이스 (Rebase)
 
 ```bash
 git checkout main
+git rebase upstream/main
+```
+
+```bash
+git switch main
 git rebase upstream/main
 ```
 
@@ -84,6 +98,7 @@ git push origin main
 ```bash
 git fetch upstream
 git checkout main
+git switch main
 git reset --hard upstream/main
 git push origin main --force
 ```

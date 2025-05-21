@@ -11,6 +11,12 @@ CoconaApp.Run((
     [Option('t', Description = "GitHub Personal Access Token 입력")] string? token
 ) =>
 {
+    // 더미 데이타가 실제로 불러와 지는지 기본적으로 확인하기 위한 코드
+    var repo1Activities = DummyData.repo1Activities;
+    Console.WriteLine("repo1Activities:"+repo1Activities.Count);
+    var repo2Activities = DummyData.repo2Activities;
+    Console.WriteLine("repo2Activities:"+repo2Activities.Count);
+
     if (repos.Length != 2)
     {
         Console.WriteLine("! repository 인자는 'owner repo' 순서로 2개가 필요합니다.");
