@@ -68,8 +68,8 @@ CoconaApp.Run((
 
         var outputDir = string.IsNullOrWhiteSpace(output) ? "output" : output;
 
-        var analyzer = new GitHubAnalyzer(token!); // ✅ null-forgiving 연산자 적용
-        analyzer.Analyze(owner, repo, outputDir, formats);
+        var dataCollector = new RepoDataCollector(token!); // ✅ null-forgiving 연산자 적용
+        dataCollector.Collect(owner, repo, outputDir, formats);
     }
     catch (Exception ex)
     {
