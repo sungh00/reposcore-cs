@@ -6,9 +6,9 @@ using Octokit;
 CoconaApp.Run((
     [Argument] string[] repos,
     [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose,
-    [Option('o', Description = "출력 디렉토리 경로를 지정합니다.")] string? output,
-    [Option('f', Description = "출력 형식을 지정합니다. (예: json,csv)")] string? format,
-    [Option('t', Description = "GitHub Personal Access Token 입력")] string? token
+    [Option('t', Description = "GitHub Personal Access Token 입력")] string? token,
+    [Option('o', Description = "출력 디렉토리 경로를 지정합니다. (기본값: output)")] string output = "output",
+    [Option('f', Description = "출력 형식을 지정합니다. (기본값: json)")] string format = "json"
 ) =>
 {
     // 더미 데이타가 실제로 불러와 지는지 기본적으로 확인하기 위한 코드
