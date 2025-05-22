@@ -8,7 +8,7 @@ CoconaApp.Run((
     [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose,
     [Option('t', Description = "GitHub Personal Access Token 입력")] string? token,
     [Option('o', Description = "출력 디렉토리 경로를 지정합니다. (기본값: output)")] string output = "output",
-    [Option('f', Description = "출력 형식을 지정합니다. (기본값: json)")] string format = "json"
+    [Option('f', Description = "출력 형식을 지정합니다. (기본값: table)")] string format = "table"
 ) =>
 {
     // 더미 데이타가 실제로 불러와 지는지 기본적으로 확인하기 위한 코드
@@ -63,7 +63,7 @@ CoconaApp.Run((
     try
     {
         var formats = string.IsNullOrWhiteSpace(format)
-            ? new List<string> { "json" }
+            ? new List<string> { "table" }
             : new List<string>(format.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
         var outputDir = string.IsNullOrWhiteSpace(output) ? "output" : output;
