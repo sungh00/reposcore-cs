@@ -1,4 +1,4 @@
-﻿using Cocona;
+using Cocona;
 using System;
 using System.Collections.Generic;
 using Octokit;
@@ -97,8 +97,9 @@ static List<string> getValidFormat(string format)
 
     foreach (var fm in formats)
     {
-        if (FormatList.Contains(fm)) validFormats.Add(fm);
-        else unValidFormats.Add(fm);
+        var f = fm.Trim().ToLowerInvariant(); // 대소문자 구분 없이 유효성 검사
+        if (FormatList.Contains(f)) validFormats.Add(f);
+        else unValidFormats.Add(f);
     }
 
     // 유효하지 않은 포맷이 존재
@@ -118,7 +119,7 @@ static List<string> getValidFormat(string format)
     {
         Console.WriteLine("유효한 포맷이 존재하지 않습니다.");
         Console.WriteLine("모든 포맷을 생성합니다.");
-        validFormats.Add("all");
+        return new List<string> { "csv", "text", "chart", "html" };
     }
 
     // 추출한 리스트에에 "all"이 존재할 경우 모든 포맷 리스트 반환
