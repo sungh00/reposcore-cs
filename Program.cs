@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Octokit;
+using DotNetEnv;
 
 CoconaApp.Run((
     [Argument] string[] repos,
@@ -39,7 +40,16 @@ CoconaApp.Run((
         var client = new GitHubClient(new ProductHeaderValue("CoconaApp"));
 
         if (!string.IsNullOrEmpty(token))
-        {
+        {   
+            File.WriteAllText(".env", $"GITHUB_TOKEN={token}\n");
+            Console.WriteLine(".env의 토큰을 갱신합니다.");
+            client.Credentials = new Credentials(token);
+        }
+        else if (File.Exists(".env"))
+        {   
+            Console.WriteLine(".env의 토큰으로 인증을 진행합니다.");
+            Env.Load();
+            token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
             client.Credentials = new Credentials(token);
         }
 
