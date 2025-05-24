@@ -66,6 +66,14 @@ xUnit, NUnit, MSTest 등 테스트 프레임워크; Windows, macOS, Linux 플랫
 
 참고로, 현재는 devcontainer 설정으로 새로 코드스페이스를 만들 때 자동으로 설치가 되도록 설정이 되어 있습니다.
 
+## --check-limit
+
+`--check-limit`은 자신의 GitHub API한도를 알 수 있는 명령어입니다. 
+
+터미널(콘솔)에 자신의 남은 API 요청 수, 전체 한도, 리셋 시간이 출력됩니다.
+
+터미널에서 사용 할 때 : `node Program.cs --check-limit` (항상 동작하는 명령어)
+
 ### 활용 방법
 명령 팔레트(Command Palette) (Ctrl+Shift+P)에서 다음 명령어 사용:
 - C# Dev Kit: Run Test
