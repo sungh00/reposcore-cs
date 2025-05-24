@@ -3,6 +3,23 @@ A CLI for scoring student participation in an open-source class repo, implemente
 
 **주의**: 처음 만들 때 dotnet 7.0으로 환경을 설정했다 8.0으로 설정을 바꿨기 때문에 그 이전에 Codespace를 생성한 경우 코드스페이스 vscode 에디터에서 `Ctrl-Shift-P`를 누르고 rebuild로 검색해서 Codespace rebuild를 선택하면 8.0 환경으로 다시 가상머신이 만들어집니다. (단, 기존에 컨테이너 안에 있는 파일들은 깃헙에 push하지 않은 내용들 중에 필요한 게 있으면 혹시 모르니 백업해 놓아야 ...)
 
+## CLI 유틸리티 실행 방법
+
+기본적인 명령행 인자 처리와 옵션을 다음과 같은 명령어로 시험삼아 실행해 볼 수 있습니다.
+ 
+```bash
+dotnet run -- owner repo
+dotnet run -- owner repo --verbose
+dotnet run -- --version
+dotnet run -- --help
+```
+
+* 옵션 등을 정리해 나가는 단계이므로 실행 예시는 출력 결과가 계속해서 변경할 것이므로 일단 이전에 실행 예시 출력 결과들은 삭제하였음
+* 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
+* 위 명령어들은 `reposcore-cs.csproj` 파일이 위치한 최상위 디렉토리(`reposcore-cs`)에서 실행해야 정상적으로 동작합니다.
+
+---
+
 ## Score Formula
 아래는 PR 개수와 이슈 개수의 비율에 따라 점수로 인정가능한 최대 개수를 구하고 각 배점에 따라 최종 점수를 산출하는 공식이다.
 
@@ -31,23 +48,6 @@ $I_d^* = I_{\text{valid}} - I_{fb}^* \quad$ 남은 개수에서 문서 이슈 �
 
 최종 점수 계산 공식:  
 $S = 3P_{fb}^* + 2P_d^* + 1P_t^* + 2I_{fb}^* + 1I_d^*$
-
-## CLI 유틸리티 실행 방법
-
-기본적인 명령행 인자 처리와 옵션을 다음과 같은 명령어로 시험삼아 실행해 볼 수 있습니다.
- 
-```bash
-dotnet run -- owner repo
-dotnet run -- owner repo --verbose
-dotnet run -- --version
-dotnet run -- --help
-```
-
-* 옵션 등을 정리해 나가는 단계이므로 실행 예시는 출력 결과가 계속해서 변경할 것이므로 일단 이전에 실행 예시 출력 결과들은 삭제하였음
-* 앞으로 다른 프로젝트처럼 -h나 --help 옵션으로 실행시켜 출력되는 시놉시스와 간단한 도움말이 자동으로 여기에 생성되는 방식으로 템플릿화 해야 함
-* 위 명령어들은 `reposcore-cs.csproj` 파일이 위치한 최상위 디렉토리(`reposcore-cs`)에서 실행해야 정상적으로 동작합니다.
-
----
 
 ##  C# Dev Kit 설치 및 활용
 Visual Studio Code용 C# Dev Kit 확장 프로그램은 C# 개발을 보다 편리하게 도와주는 도구입니다.  
