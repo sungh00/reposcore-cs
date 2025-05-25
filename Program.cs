@@ -9,7 +9,7 @@ CoconaApp.Run((
     [Option('v', Description = "자세한 로그 출력을 활성화합니다.")] bool verbose,
     [Option('o', Description = "출력 디렉토리 경로를 지정합니다.")] string? output,
     [Option('t', Description = "GitHub Personal Access Token 입력")] string? token,
-    [Option('f', Description = "출력 형식을 지정합니다. (text, csv, chart, html, all)")] string format = "all"
+    [Option('f', Description = "출력 형식을 지정합니다. (text, csv, chart, html, all)")] string[]? format
 ) =>
 {
     // 더미 데이타가 실제로 불러와 지는지 기본적으로 확인하기 위한 코드
@@ -75,7 +75,9 @@ CoconaApp.Run((
 
         try
         {
-            var formats = getValidFormat(format);
+            var formats = format == null ?
+                new List<string> { "text", "csv", "chart", "html" } 
+                : checkFormat(format);
 
             var outputDir = string.IsNullOrWhiteSpace(output) ? "output" : output;
 
@@ -101,15 +103,14 @@ CoconaApp.Run((
     }
 });
 
-static List<string> getValidFormat(string format) 
-{   
-    var formats = new List<string>(format.Split(',', StringSplitOptions.RemoveEmptyEntries)); 
+static List<string> checkFormat(string[] format) 
+{
     var FormatList = new List<string> {"text", "csv", "chart", "html", "all"}; // 유효한 format
 
     var validFormats = new List<string> { };
     var unValidFormats = new List<string> { };
 
-    foreach (var fm in formats)
+    foreach (var fm in format)
     {
         var f = fm.Trim().ToLowerInvariant(); // 대소문자 구분 없이 유효성 검사
         if (FormatList.Contains(f)) validFormats.Add(f);
@@ -118,7 +119,7 @@ static List<string> getValidFormat(string format)
 
     // 유효하지 않은 포맷이 존재
     if (unValidFormats.Count != 0)
-    {   
+    {
         Console.WriteLine("유효하지 않은 포맷이 존재합니다.");
         Console.Write("유효하지 않은 포맷: ");
         foreach (var unValidFormat in unValidFormats)
@@ -129,15 +130,7 @@ static List<string> getValidFormat(string format)
         Environment.Exit(1);
     }
 
-    // 유효한 포맷이 존재 X
-    if (validFormats.Count == 0)
-    {
-        Console.WriteLine("유효한 포맷이 존재하지 않습니다.");
-        Console.WriteLine("모든 포맷을 생성합니다.");
-        return new List<string> { "csv", "text", "chart", "html" };
-    }
-
-    // 추출한 리스트에에 "all"이 존재할 경우 모든 포맷 리스트 반환
+    // 추출한 리스트에 "all"이 존재할 경우 모든 포맷 리스트 반환
     if (validFormats.Contains("all"))
     {
         return new List<string> { "text", "csv", "chart", "html" };
