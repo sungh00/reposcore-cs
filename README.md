@@ -8,8 +8,8 @@ A CLI for scoring student participation in an open-source class repo, implemente
 기본적인 명령행 인자 처리와 옵션을 다음과 같은 명령어로 시험삼아 실행해 볼 수 있습니다.
  
 ```bash
-dotnet run -- owner repo
-dotnet run -- owner repo --verbose
+dotnet run -- owner/repo
+dotnet run -- owner/repo --verbose
 dotnet run -- --version
 dotnet run -- --help
 ```
